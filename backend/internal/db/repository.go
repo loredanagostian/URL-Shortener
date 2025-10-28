@@ -1,13 +1,13 @@
 package db
 
 // URL Operations
-type Repository interface {
+type RepositoryInterface interface {
 	CreateShortURL(shortURL *URL) error
 	GetShortURL(code string) (*URL, error)
 	DeleteShortURL(code string) error
 	GetAllShortURLs() ([]*URL, error)
 }
 
-func InitRepository(databaseURL string) (Repository, error) {
+func InitRepository(databaseURL string) (RepositoryInterface, error) {
 	return NewMemoryRepository(), nil
 }

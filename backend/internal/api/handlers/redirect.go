@@ -25,14 +25,14 @@ func (h *RedirectHandler) RedirectToOriginal(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	// Get original URL from database
-	shortURL, err := h.repo.GetShortURL(shortCode)
+	// Get original URL from database and increment click count
+	shortURL, err := h.repo.GetShortURLForRedirect(shortCode)
 	if err != nil {
 		http.Error(w, "Short URL not found", http.StatusNotFound)
 		return
 	}
 
-	// Check if URL is expired
+	// Check if URL is expired (already handled in GetShortURLForRedirect, but double-check)
 	if shortURL.IsExpired() {
 		http.Error(w, "Short URL has expired", http.StatusGone)
 		return

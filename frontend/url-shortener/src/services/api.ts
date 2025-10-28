@@ -20,7 +20,12 @@ export interface URLDetails {
   original_url: string;
   created_at: string;
   expires_at?: string;
-  click_count?: number;
+  click_count: number;
+  last_clicked?: string;
+}
+
+export interface URLHistoryItem extends URLDetails {
+  status: string;
 }
 
 class ApiService {
@@ -93,6 +98,17 @@ class ApiService {
     if (!response.ok) {
       throw new Error(`Failed to delete URL: ${response.statusText}`);
     }
+  }
+
+  // Get URL history
+  async getURLHistory(): Promise<URLHistoryItem[]> {
+    const response = await fetch(`${this.baseUrl}/api/history`);
+
+    if (!response.ok) {
+      throw new Error(`Failed to get URL history: ${response.statusText}`);
+    }
+
+    return response.json();
   }
 
   // Build the full short URL for display

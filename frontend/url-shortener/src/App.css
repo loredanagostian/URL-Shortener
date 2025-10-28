@@ -33,9 +33,48 @@
 
 .app-header p {
   font-size: 1rem;
-  margin: 0;
+  margin: 0 0 1.5rem 0;
   opacity: 0.8;
   font-weight: 300;
+}
+
+.app-nav {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.nav-btn {
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+  border-color: var(--color-accent-blue);
+}
+
+.nav-btn.active {
+  background: linear-gradient(
+    135deg,
+    var(--color-gradient-end) 0%,
+    var(--color-gradient-start) 100%
+  );
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  color: white;
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
 }
 
 .app-main {
@@ -68,5 +107,15 @@
 
   .app-header h1 {
     font-size: 2rem;
+  }
+
+  .app-nav {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .nav-btn {
+    width: 100%;
+    padding: 1rem;
   }
 }

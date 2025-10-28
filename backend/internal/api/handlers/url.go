@@ -53,3 +53,28 @@ func (h *URLHandler) GetAllURLs(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Content-Type", "application/json")
     json.NewEncoder(w).Encode(urls)
 }
+
+func (h *URLHandler) GetURLHistory(w http.ResponseWriter, r *http.Request) {
+    urls, err := h.repo.GetAllURLsHistory()
+    if err != nil {
+        http.Error(w, "Internal server error", http.StatusInternalServerError)
+        return
+    }
+    
+    // Add status information to each URL
+    type URLHistoryItem struct {
+        *db.URL
+        Status string `json:"status"`
+    }
+    
+    var historyItems []URLHistoryItem
+    for _, url := range urls {
+        historyItems = append(historyItems, URLHistoryItem{
+            URL:    url,
+            Status: url.GetStatus(),
+        })
+    }
+    
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(historyItems)
+}

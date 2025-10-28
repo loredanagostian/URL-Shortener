@@ -64,6 +64,53 @@ func (r *MemoryRepository) GetShortURL(code string) (*URL, error) {
 	return &result, nil
 }
 
+// GetShortURLForRedirect retrieves a URL for redirect and increments click count
+func (r *MemoryRepository) GetShortURLForRedirect(code string) (*URL, error) {
+	r.mutex.Lock()
+	defer r.mutex.Unlock()
+
+	shortURL, exists := r.urls[code]
+	if !exists {
+		return nil, fmt.Errorf("short URL not found")
+	}
+
+	// Check if URL has expired
+	if shortURL.IsExpired() {
+		return nil, fmt.Errorf("short URL has expired")
+	}
+
+	// Increment click count
+	shortURL.IncrementClickCount()
+
+	// Return a copy
+	result := *shortURL
+	return &result, nil
+}
+
+// GetAllURLsHistory retrieves ALL URLs including expired ones for history
+func (r *MemoryRepository) GetAllURLsHistory() ([]*URL, error) {
+	r.mutex.RLock()
+	defer r.mutex.RUnlock()
+
+	// Convert map to slice including expired URLs
+	var allURLs []*URL
+	for _, url := range r.urls {
+		urlCopy := *url
+		allURLs = append(allURLs, &urlCopy)
+	}
+
+	// Simple sorting by creation time (newest first)
+	for i := 0; i < len(allURLs)-1; i++ {
+		for j := i + 1; j < len(allURLs); j++ {
+			if allURLs[i].CreatedAt.Before(allURLs[j].CreatedAt) {
+				allURLs[i], allURLs[j] = allURLs[j], allURLs[i]
+			}
+		}
+	}
+
+	return allURLs, nil
+}
+
 // GetAllShortURLs retrieves all non-expired short URLs with pagination
 func (r *MemoryRepository) GetAllShortURLs() ([]*URL, error) {
 	r.mutex.RLock()

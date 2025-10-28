@@ -1,32 +1,45 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
+import URLForm from "./components/URLForm";
+import ResultDisplay from "./components/ResultDisplay";
+import type { ShortenResponse } from "./services/api";
+import testAPI from "./test-api";
 
 function App() {
-  const [url, setUrl] = useState("");
+  const [result, setResult] = useState<ShortenResponse | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Implement URL shortening logic
-    console.log("Shortening URL:", url);
+  // Test API connection on component mount
+  useEffect(() => {
+    testAPI();
+  }, []);
+
+  const handleSuccess = (shortenResult: ShortenResponse) => {
+    setResult(shortenResult);
+  };
+
+  const handleReset = () => {
+    setResult(null);
   };
 
   return (
     <div className="app">
       <div className="container">
-        <h1>URL Shortener</h1>
-        <form onSubmit={handleSubmit} className="url-form">
-          <input
-            type="url"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            placeholder="Enter your URL here..."
-            className="url-input"
-            required
-          />
-          <button type="submit" className="shorten-btn">
-            Shorten me
-          </button>
-        </form>
+        <header className="app-header">
+          <h1>🔗 URL Shortener</h1>
+          <p>Transform long URLs into short, shareable links</p>
+        </header>
+
+        <main className="app-main">
+          {result ? (
+            <ResultDisplay result={result} onReset={handleReset} />
+          ) : (
+            <URLForm onSuccess={handleSuccess} />
+          )}
+        </main>
+
+        <footer className="app-footer">
+          <p>Built with React & Go • Made with ❤️</p>
+        </footer>
       </div>
     </div>
   );

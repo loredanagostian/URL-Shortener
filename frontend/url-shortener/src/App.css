@@ -1,90 +1,69 @@
 .app {
   min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #144ee3 0%, #eb568e 100%);
   padding: 2rem;
 }
 
 .container {
-  background: #181e29;
-  padding: 3rem;
-  border-radius: 12px;
-  box-shadow: 0 20px 25px -5px rgba(11, 16, 27, 0.3),
-    0 10px 10px -5px rgba(11, 16, 27, 0.2);
-  max-width: 500px;
   width: 100%;
-  border: 1px solid #0b101b;
-}
-
-.container h1 {
-  margin: 0 0 2rem 0;
-  color: #c9ced6;
-  font-size: 2.5rem;
-  font-weight: 700;
-  text-align: center;
-}
-
-.url-form {
+  max-width: 800px;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
-.url-input {
-  padding: 1rem;
-  border: 2px solid #0b101b;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  outline: none;
-  background: #0b101b;
-  color: #c9ced6;
+.app-header {
+  text-align: center;
+  color: white;
+  margin-bottom: 1rem;
 }
 
-.url-input:focus {
-  border-color: #eb568e;
-  box-shadow: 0 0 0 3px rgba(235, 86, 142, 0.2);
+.app-header h1 {
+  font-size: 3rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.url-input::placeholder {
-  color: #c9ced6;
-  opacity: 0.7;
+.app-header p {
+  font-size: 1.2rem;
+  margin: 0;
+  opacity: 0.9;
+  font-weight: 300;
 }
 
-.shorten-btn {
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #eb568e 0%, #144ee3 100%);
-  color: #c9ced6;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+.app-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.shorten-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(235, 86, 142, 0.3),
-    0 4px 6px -2px rgba(20, 78, 227, 0.2);
+.app-footer {
+  text-align: center;
+  color: white;
+  opacity: 0.8;
+  margin-top: 2rem;
 }
 
-.shorten-btn:active {
-  transform: translateY(0);
+.app-footer p {
+  margin: 0;
+  font-size: 0.875rem;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .app {
     padding: 1rem;
   }
 
-  .container {
-    padding: 2rem;
+  .app-header h1 {
+    font-size: 2.5rem;
   }
 
-  .container h1 {
-    font-size: 2rem;
+  .app-header p {
+    font-size: 1rem;
   }
 }

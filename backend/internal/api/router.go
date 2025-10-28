@@ -4,12 +4,16 @@ import (
 	"go-url-shortener/internal/api/handlers"
 	"go-url-shortener/internal/core"
 	"go-url-shortener/internal/db"
+	"go-url-shortener/internal/middleware"
 
 	"github.com/gorilla/mux"
 )
 
 func NewRouter(shortener *core.Shortener, repo db.RepositoryInterface) *mux.Router {
     r := mux.NewRouter()
+    
+    // Add CORS middleware
+    r.Use(middleware.CORS)
     
     // Initialize handlers
     shortenHandler := handlers.NewShortenHandler(shortener, repo)

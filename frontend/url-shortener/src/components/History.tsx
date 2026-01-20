@@ -66,6 +66,23 @@ const History: React.FC = () => {
         }
     };
 
+    const deleteURL = async (shortCode: string) => {
+        if (
+            window.confirm(
+                'Are you sure you want to delete this URL? This action cannot be undone.',
+            )
+        ) {
+            try {
+                await apiService.deleteURL(shortCode);
+                // Refresh the history after deletion
+                await loadHistory();
+            } catch (error) {
+                console.error('Error deleting URL:', error);
+                setError(error instanceof Error ? error.message : 'Failed to delete URL');
+            }
+        }
+    };
+
     const getStatusBadge = (status: string) => {
         const className = status === 'active' ? 'status-active' : 'status-expired';
         const icon = status === 'active' ? '✅' : '⏰';
@@ -171,6 +188,13 @@ const History: React.FC = () => {
                                             title="Download QR Code"
                                         >
                                             📱
+                                        </button>
+                                        <button
+                                            onClick={() => deleteURL(item.short_code)}
+                                            className="delete-action-btn"
+                                            title="Delete URL"
+                                        >
+                                            🗑️
                                         </button>
                                         {item.status === 'active' && (
                                             <button

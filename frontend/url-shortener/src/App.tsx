@@ -44,7 +44,7 @@ function App() {
 
     return (
         <div className="app">
-            <div className="container">
+            <div className={`container ${currentView === 'history' ? 'history-view' : ''}`}>
                 <header className="app-header">
                     <h1>🔗 URL Shortener</h1>
                     <p>Transform long URLs into short, shareable links</p>

@@ -1,121 +1,126 @@
 .app {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-background-gradient);
-  padding: 2rem;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-background-gradient);
+    padding: 2rem;
 }
 
 .container {
-  background: var(--color-background-secondary);
-  padding: 3rem;
-  border-radius: 16px;
-  box-shadow: var(--shadow-primary);
-  max-width: 800px;
-  width: 100%;
-  border: 1px solid var(--color-border-primary);
+    background: var(--color-background-secondary);
+    padding: 3rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow-primary);
+    max-width: 800px;
+    width: 100%;
+    border: 1px solid var(--color-border-primary);
+    transition: max-width 0.3s ease;
+}
+
+.container.history-view {
+    max-width: 1200px;
 }
 
 .app-header {
-  text-align: center;
-  color: var(--color-text-primary);
-  margin-bottom: 2rem;
+    text-align: center;
+    color: var(--color-text-primary);
+    margin-bottom: 2rem;
 }
 
 .app-header h1 {
-  margin: 0 0 0.5rem 0;
-  color: var(--color-text-primary);
-  font-size: 2.5rem;
-  font-weight: 700;
-  text-align: center;
+    margin: 0 0 0.5rem 0;
+    color: var(--color-text-primary);
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
 }
 
 .app-header p {
-  font-size: 1rem;
-  margin: 0 0 1.5rem 0;
-  opacity: 0.8;
-  font-weight: 300;
+    font-size: 1rem;
+    margin: 0 0 1.5rem 0;
+    opacity: 0.8;
+    font-weight: 300;
 }
 
 .app-nav {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: center;
-  margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1rem;
 }
 
 .nav-btn {
-  padding: 0.75rem 1.5rem;
-  background: transparent;
-  color: var(--color-text-secondary);
-  border: 1px solid var(--color-border-primary);
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border-primary);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
 .nav-btn:hover {
-  background: var(--color-background-primary);
-  color: var(--color-text-primary);
-  border-color: var(--color-accent-blue);
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    border-color: var(--color-accent-blue);
 }
 
 .nav-btn.active {
-  background: linear-gradient(
-    135deg,
-    var(--color-gradient-end) 0%,
-    var(--color-gradient-start) 100%
-  );
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  color: white;
-  border: 1px solid transparent;
-  position: relative;
-  overflow: hidden;
+    background: linear-gradient(
+        135deg,
+        var(--color-gradient-end) 0%,
+        var(--color-gradient-start) 100%
+    );
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    color: white;
+    border: 1px solid transparent;
+    position: relative;
+    overflow: hidden;
 }
 
 .app-main {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .app-footer {
-  text-align: center;
-  color: var(--color-text-primary);
-  opacity: 0.6;
-  margin-top: 2rem;
+    text-align: center;
+    color: var(--color-text-primary);
+    opacity: 0.6;
+    margin-top: 2rem;
 }
 
 .app-footer p {
-  margin: 0;
-  font-size: 0.875rem;
+    margin: 0;
+    font-size: 0.875rem;
 }
 
 @media (max-width: 640px) {
-  .app {
-    padding: 1rem;
-  }
+    .app {
+        padding: 1rem;
+    }
 
-  .container {
-    padding: 2rem;
-  }
+    .container {
+        padding: 2rem;
+    }
 
-  .app-header h1 {
-    font-size: 2rem;
-  }
+    .app-header h1 {
+        font-size: 2rem;
+    }
 
-  .app-nav {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
+    .app-nav {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
 
-  .nav-btn {
-    width: 100%;
-    padding: 1rem;
-  }
+    .nav-btn {
+        width: 100%;
+        padding: 1rem;
+    }
 }

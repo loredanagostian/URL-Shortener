@@ -1,21 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './App.css';
 import URLForm from './components/URLForm';
 import ResultDisplay from './components/ResultDisplay';
 import History from './components/History';
 import type { ShortenResponse } from './services/api';
-import testAPI from './test-api';
 
 type ViewType = 'form' | 'result' | 'history';
 
 function App() {
     const [result, setResult] = useState<ShortenResponse | null>(null);
     const [currentView, setCurrentView] = useState<ViewType>('form');
-
-    // Test API connection on component mount
-    useEffect(() => {
-        testAPI();
-    }, []);
 
     const handleSuccess = (shortenResult: ShortenResponse) => {
         setResult(shortenResult);

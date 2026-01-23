@@ -1,5 +1,11 @@
 // API service for communicating with the backend
+//
+// In dev we rely on Vite's proxy for API calls, so the API base is '' (same-origin).
+// Redirect links (/{shortCode}) should still point to the backend server.
 const API_BASE_URL = import.meta.env.DEV ? '' : 'http://localhost:8080';
+const SHORTLINK_BASE_URL =
+    import.meta.env.VITE_SHORTLINK_BASE_URL ??
+    (import.meta.env.DEV ? 'http://localhost:8080' : API_BASE_URL);
 
 export interface ShortenRequest {
     url: string;
@@ -31,9 +37,11 @@ export interface URLHistoryItem extends URLDetails {
 
 class ApiService {
     private baseUrl: string;
+    private shortlinkBaseUrl: string;
 
     constructor() {
         this.baseUrl = API_BASE_URL;
+        this.shortlinkBaseUrl = SHORTLINK_BASE_URL;
     }
 
     // Create a short URL
@@ -114,7 +122,7 @@ class ApiService {
 
     // Build the full short URL for display
     getShortURL(shortCode: string): string {
-        return `${this.baseUrl}/${shortCode}`;
+        return `${this.shortlinkBaseUrl}/${shortCode}`;
     }
 }
 

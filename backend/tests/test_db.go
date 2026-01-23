@@ -6,7 +6,13 @@ import (
 )
 
 func main() {
-	repo := db.NewMemoryRepository()
+	databaseURL := db.GetDatabaseURL()
+
+	repo, err := db.InitRepository(databaseURL)
+	if err != nil {
+		fmt.Println("Failed to initialize database repository:", err)
+		return
+	}
 
 	// Test 1: Create a short URL
 	url := &db.URL{
@@ -14,7 +20,7 @@ func main() {
 		ShortCode:   "exmpl",
 	}
 
-	err := repo.CreateShortURL(url)
+	err = repo.CreateShortURL(url)
 
 	if err != nil {
 		fmt.Println("[1] Error creating short URL:", err)
@@ -22,7 +28,7 @@ func main() {
 	}
 
 	fmt.Printf("[1] Created URL: ID=%d, Code=%s, Original=%s\n", url.ID, url.ShortCode, url.OriginalURL)
-    fmt.Printf("[1] Created at: %s\n", url.CreatedAt.Format("2006-01-02 15:04:05"))
+	fmt.Printf("[1] Created at: %s\n", url.CreatedAt.Format("2006-01-02 15:04:05"))
 
 	// Test 2: Try to create a duplicate short URL
 	urlDup := &db.URL{
@@ -40,7 +46,7 @@ func main() {
 
 	// Test 3: Retrieve the created short URL
 	retrievedURL, err := repo.GetShortURL("exmpl")
-	
+
 	if err != nil {
 		fmt.Println("[3] Error retrieving short URL:", err)
 		return
@@ -79,7 +85,7 @@ func main() {
 	} else {
 		fmt.Println("[5] URL is not expired as expected")
 	}
-	
+
 	// Test 6: Delete the created short URL
 	err = repo.DeleteShortURL("exmpl")
 

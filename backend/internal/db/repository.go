@@ -1,6 +1,7 @@
 package db
 
 import (
+	"fmt"
 	"os"
 	"strings"
 )
@@ -18,18 +19,17 @@ type RepositoryInterface interface {
 }
 
 func InitRepository(databaseURL string) (RepositoryInterface, error) {
-	// If no database URL provided, use memory repository
+	databaseURL = strings.TrimSpace(databaseURL)
 	if databaseURL == "" {
-		return NewMemoryRepository(), nil
+		return nil, fmt.Errorf("database URL is required (set DATABASE_URL or POSTGRES_URL)")
 	}
 
-	// If PostgreSQL URL provided, use PostgreSQL
-	if strings.Contains(databaseURL, "postgres://") || strings.Contains(databaseURL, "postgresql://") {
+	// PostgreSQL only
+	if strings.HasPrefix(databaseURL, "postgres://") || strings.HasPrefix(databaseURL, "postgresql://") {
 		return NewPostgresRepository(databaseURL)
 	}
 
-	// Default to memory repository
-	return NewMemoryRepository(), nil
+	return nil, fmt.Errorf("unsupported database URL scheme (expected postgres:// or postgresql://)")
 }
 
 func GetDatabaseURL() string {

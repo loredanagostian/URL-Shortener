@@ -18,9 +18,23 @@ const History: React.FC = () => {
             setLoading(true);
             setError(null);
             const historyData = await apiService.getURLHistory();
-            setHistory(historyData);
+            setHistory(historyData || []); // Ensure we always have an array
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to load history');
+            console.error('Error loading history:', err);
+
+            // If it's a 404 or empty response, treat as empty history instead of error
+            if (
+                err instanceof Error &&
+                (err.message.includes('404') ||
+                    err.message.includes('Not Found') ||
+                    err.message.includes('Internal Server Error'))
+            ) {
+                setHistory([]);
+                setError(null);
+            } else {
+                setError(err instanceof Error ? err.message : 'Failed to load history');
+                setHistory([]);
+            }
         } finally {
             setLoading(false);
         }
@@ -81,6 +95,10 @@ const History: React.FC = () => {
                 setError(error instanceof Error ? error.message : 'Failed to delete URL');
             }
         }
+    };
+
+    const openShortURL = (shortCode: string) => {
+        window.open(apiService.getShortURL(shortCode), '_blank', 'noopener,noreferrer');
     };
 
     const getStatusBadge = (status: string) => {
@@ -198,12 +216,7 @@ const History: React.FC = () => {
                                         </button>
                                         {item.status === 'active' && (
                                             <button
-                                                onClick={() =>
-                                                    window.open(
-                                                        apiService.getShortURL(item.short_code),
-                                                        '_blank',
-                                                    )
-                                                }
+                                                onClick={() => openShortURL(item.short_code)}
                                                 className="open-action-btn"
                                                 title="Open short URL"
                                             >

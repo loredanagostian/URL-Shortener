@@ -150,3 +150,16 @@ func (r *MemoryRepository) DeleteShortURL(code string) error {
 
 	return nil
 }
+
+// AddClickEvent - memory repository doesn't persist click events
+func (r *MemoryRepository) AddClickEvent(urlId int, ipAddress, userAgent, referer string) error {
+	// In memory repository, we don't store individual click events
+	// Click counts are updated in GetShortURLForRedirect
+	return nil
+}
+
+// GetClickEvents - memory repository doesn't store individual click events
+func (r *MemoryRepository) GetClickEvents(urlId int) ([]*ClickEvent, error) {
+	// In memory repository, we don't store individual click events
+	return []*ClickEvent{}, nil
+}

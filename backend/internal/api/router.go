@@ -19,6 +19,7 @@ func NewRouter(shortener *core.Shortener, repo db.RepositoryInterface) *mux.Rout
     shortenHandler := handlers.NewShortenHandler(shortener, repo)
     redirectHandler := handlers.NewRedirectHandler(repo)
     urlHandler := handlers.NewURLHandler(repo)
+    analyticsHandler := handlers.NewAnalyticsHandler(repo)
     
     // API routes
     api := r.PathPrefix("/api").Subrouter()
@@ -27,6 +28,9 @@ func NewRouter(shortener *core.Shortener, repo db.RepositoryInterface) *mux.Rout
     api.HandleFunc("/urls/{shortCode}", urlHandler.DeleteShortURL).Methods("DELETE")
     api.HandleFunc("/urls", urlHandler.GetAllURLs).Methods("GET")
     api.HandleFunc("/history", urlHandler.GetURLHistory).Methods("GET")
+    
+    // Analytics routes
+    api.HandleFunc("/analytics/{shortCode}", analyticsHandler.GetURLAnalytics).Methods("GET")
     
     // Redirect route
     r.HandleFunc("/{shortCode}", redirectHandler.RedirectToOriginal).Methods("GET")

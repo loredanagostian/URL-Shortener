@@ -277,6 +277,24 @@ npm run dev -- --port 3000
 
 ---
 
+## Screenshots
+
+Main URL shortener form
+
+![alt text](image.png)
+
+![alt text](image-2.png)
+
+URL shortener view
+
+![alt text](image-3.png)
+
+![alt text](image-4.png)
+
+URL history list
+
+![alt text](image-5.png)
+
 ## License
 
 MIT License
